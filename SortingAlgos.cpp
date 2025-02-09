@@ -52,6 +52,54 @@ void insertionSort(int arr[],int n){ // O(n^2)
     }
 }
 
+void mergeArray(int arr[], int start, int mid, int end) {
+    int l1 = mid - start + 1;
+    int l2 = end - mid;
+    int L[l1], R[l2]; //create 2 arrays that are l1 and l2 
+    for (int i = 0; i < l1; i++) {
+        L[i] = arr[start + i];
+    }
+    // insert the left hand sorted array to a L array.
+    for (int j = 0; j < l2; j++) {
+        R[j] = arr[mid + 1 + j];
+    }
+    // insert the right hand sorted array to a R array
+
+    int i = 0, j = 0, k = start;
+
+    // merges the sorted array after comparing the arrays elements of the
+    while (i < l1 && j < l2) {
+        if (L[i] <= R[j]) {
+            arr[k] = L[i];
+            i++;
+        } else {
+            arr[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+    // inserts any remaining elements in the merged array...
+    while (i < l1) {
+        arr[k] = L[i];
+        i++;
+        k++;
+    }
+    while (j < l2) {
+        arr[k] = R[j];
+        j++;
+        k++;
+    }
+}
+
+void mergeSort(int arr[], int start, int end) {
+    if (start < end) {
+        int mid = start + (end - start) / 2;
+        mergeSort(arr, start, mid); // Left hand array
+        mergeSort(arr, mid + 1, end); // Right hand array
+        mergeArray(arr, start, mid, end);
+    }
+}
+
 void printArray(int arr[],int n){
     for(int i = 0;i< n-1;i++){
         cout << arr[i] << " ";
